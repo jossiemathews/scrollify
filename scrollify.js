@@ -26,26 +26,29 @@
 				newDiv.style.backgroundColor = "#666";
 				newDiv.style.height = (targetDiv.clientHeight * (targetDiv.clientHeight/targetDiv.scrollHeight))+"px";
 				newDiv.style.width = "14px";
-				newDiv.style.position = "relative";
-				newDiv.style.float = "right";
-				newDiv.style.top = "0px";
+				newDiv.style.position = "absolute";
+				newDiv.style.left = targetDiv.clientWidth+'px';
+				newDiv.style.top = targetDiv.clientTop+'px';
 				newDiv.style.borderRadius = '2em'
 				targetDiv.insertBefore(newDiv,targetDiv.firstChild);
 			}
 			var addScrollEvent = function(evt){
 				evt.preventDefault();
-				var move = (evt.wheelDeltaY > 0) ? -5 : 5; 
+				var move = (evt.wheelDeltaY > 0) ? -5 : 5;
+				var perMover =  (evt.wheelDeltaY > 0) ? (-1 * perMove) : perMove;
+				console.log(perMove)
 				currentTop = parseInt(newDiv.style.top.slice(0,-2));
-				newDiv.style.top = (currentTop + move >= 0 && currentTop + move <= targetDiv.clientHeight - newDiv.clientHeight) ? currentTop + 15+"px" : currentTop;
+				newDiv.style.top = (currentTop + perMover >= 0 && currentTop + perMover <= targetDiv.clientHeight - newDiv.clientHeight) ? currentTop + perMover+"px" : currentTop;
 				targetDiv.scrollTop = targetDiv.scrollTop + move;
-				console.log(currentTop)
+				//console.log(currentTop)
 			}
 			return {
 				init : function(divName){
 					targetDiv = document.getElementById(divName);
 					readifyDiv(divName);
 					addScroll(divName);
-					
+					perMove = (targetDiv.scrollHeight/5);
+					perMove = Math.ceil((targetDiv.clientHeight)/perMove);
 					targetDiv.onmouseover = function(){
 						mouseOver = true;
 					}
