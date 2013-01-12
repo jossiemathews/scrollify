@@ -28,7 +28,7 @@
 				newDiv.style.width = "14px";
 				newDiv.style.position = "absolute";
 				newDiv.style.left = targetDiv.clientWidth+'px';
-				newDiv.style.top = targetDiv.clientTop+'px';
+				newDiv.style.top = targetDiv.clientTop + targetDiv.offsetTop+'px' ;
 				newDiv.style.borderRadius = '2em'
 				targetDiv.insertBefore(newDiv,targetDiv.firstChild);
 			}
@@ -40,7 +40,6 @@
 				currentTop = parseInt(newDiv.style.top.slice(0,-2));
 				newDiv.style.top = (currentTop + perMover >= 0 && currentTop + perMover <= targetDiv.clientHeight - newDiv.clientHeight) ? currentTop + perMover+"px" : currentTop;
 				targetDiv.scrollTop = targetDiv.scrollTop + move;
-				//console.log(currentTop)
 			}
 			return {
 				init : function(divName){
